@@ -4,31 +4,22 @@ import { Clock, Users, Utensils, Calendar } from 'lucide-react';
 const Home = () => {
     return (
         <div className="min-h-screen bg-base-100 flex flex-col">
-            {/* Navbar */}
-            {/* <div className="navbar bg-primary text-primary-content">
-                <div className="navbar-start">
-                    <a className="btn btn-ghost text-xl">Hall Dining Management</a>
-                </div>
-                <div className="navbar-end">
-                    <button className="btn btn-ghost">Login</button>
-                    <button className="btn btn-secondary">Register</button>
-                </div>
-            </div> */}
-
-            {/* Hero Section */}
-            <div className="hero min-h-[calc(100vh-4rem)] bg-base-200">
+            
+            {/* Upper Section */}
+            <div className="hero min-h-[calc(100vh-4rem)] bg-[url('https://i.postimg.cc/HLpfYC5h/pexels-pixabay-262978.jpg')]">
+            {/* <div className="hero min-h-[calc(100vh-4rem)] bg-base-200"> */}
                 <div className="hero-content text-center">
                     <div className="max-w-2xl">
                         <h1 className="text-5xl font-bold mb-6 text-primary">
                             Streamline Your Dining Experience
                         </h1>
-                        <p className="text-xl mb-8">
+                        <p className="text-xl mb-8 text-white">
                             Effortlessly manage meals, track nutrition, and enjoy hassle-free dining 
                             in your hall with our comprehensive management system.
                         </p>
                         <div className="flex justify-center gap-4">
                             <button className="btn btn-primary">Get Started</button>
-                            <button className="btn btn-outline btn-secondary">Learn More</button>
+                            <button className="btn btn-outline btn-primary">Learn More</button>
                         </div>
                     </div>
                 </div>
