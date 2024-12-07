@@ -91,7 +91,7 @@ const Register = () => {
             <div className="absolute inset-0 bg-black opacity-50"></div>
 
             <div className="relative z-10 w-full max-w-md p-4 bg-white shadow-md rounded-lg">
-                <h1 className="text-3xl font-bold text-center text-orange-500 mb-6 animate__animated animate__fadeInDown">
+                <h1 className="text-3xl font-bold text-center text-primary mb-6 animate__animated animate__fadeInDown">
                     Register Now!
                 </h1>
 
@@ -123,8 +123,9 @@ const Register = () => {
                         </label>
                         <select name="role" className="select select-bordered w-full" required>
                             <option value="">Select Role</option>
-                            <option value="Donor">Donor</option>
-                            <option value="Patient">Patient</option>
+                            <option value="Patient">Admin</option>
+                            <option value="Patient">Manager</option>
+                            <option value="Donor">Student</option>
                         </select>
                     </div>
 
@@ -142,7 +143,7 @@ const Register = () => {
                         </div>
                     </div>
 
-                    <button type="submit" className="btn w-full bg-orange-400 hover:bg-orange-500 text-white">
+                    <button type="submit" className="btn w-full btn-primary hover:bg-orange-500 text-white">
                         Register
                     </button>
                 </form>
@@ -157,13 +158,13 @@ const Register = () => {
 
                 <div className="mt-4 text-center">
                     <p>
-                        Already have an account? <Link to="/login" className="text-orange-600 font-bold">Login</Link>
+                        Already have an account? <Link to="/login" className="text-primary font-bold">Login</Link>
                     </p>
                 </div>
 
                 <div className="mt-2 text-center">
                     <p>
-                        Go back to <Link to="/" className="text-orange-500 font-bold">Home</Link>
+                        Go back to <Link to="/" className="text-primary font-bold">Home</Link>
                     </p>
                 </div>
             </div>

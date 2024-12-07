@@ -69,7 +69,7 @@ const Login = () => {
 
             <div className="hero-content flex-col">
                 <div className="text-center">
-                    <h1 className="text-3xl md:text-5xl font-bold text-black my-3 animate__animated animate__fadeInDown">
+                    <h1 className="text-3xl md:text-5xl font-bold text-primary my-3 mt-10 animate__animated animate__fadeInDown">
                         Login now!
                     </h1>
 
@@ -112,25 +112,25 @@ const Login = () => {
                                 </label>
                             </div>
 
-                            <button type="submit" className="btn bg-orange-400 hover:bg-orange-500 w-full">
+                            <button type="submit" className="btn btn-primary hover:bg-orange-500 text-white w-full">
                                 Login
                             </button>
                         </form>
 
                         <div className="divider">OR</div>
 
-                        <button onClick={handleGoogleSignIn} className="btn btn-outline w-full border-orange-500 text-orange-500 hover:border-orange-600 hover:text-orange-600 flex items-center justify-center">
+                        <button onClick={handleGoogleSignIn} className="btn btn-outline w-full btn-primary hover:border-orange-600 hover:text-white flex items-center justify-center">
                             <FcGoogle className="mr-2" /> Continue with Google
                         </button>
 
                         <p className="text-center mt-4">
                             New to this site?{' '}
-                            <Link to="/register" className="text-orange-600 font-bold">Register</Link>
+                            <Link to="/register" className="text-primary font-bold">Register</Link>
                         </p>
 
                         <p className="text-center">
                             Go back to{' '}
-                            <Link to="/" className="text-orange-500 font-bold">Home</Link>
+                            <Link to="/" className="text-primary font-bold">Home</Link>
                         </p>
                     </div>
                 </div>
