@@ -61,7 +61,8 @@ const Login = () => {
     };
 
     return (
-        <div className="hero min-h-screen bg-base-200 bg-[url('https://i.postimg.cc/Y075n05X/1000-F-668433624-HGKul-Uw-Qjae-LV8-Xay-QYy6-F3-RCVQff-TGv.jpg')] animate__animated animate__slideInLeft animate__delay-1s">
+        // <div className="hero min-h-screen bg-base-200 bg-[url('https://i.postimg.cc/Y075n05X/1000-F-668433624-HGKul-Uw-Qjae-LV8-Xay-QYy6-F3-RCVQff-TGv.jpg')] animate__animated animate__slideInLeft animate__delay-1s">
+        <div className="hero min-h-screen bg-base-200 bg-[url('https://i.postimg.cc/pLpJHG1t/pexels-life-of-pix-67468.jpg')] animate__animated animate__slideInLeft animate__delay-1s">
             <Helmet>
                 <title>Login</title>
             </Helmet>

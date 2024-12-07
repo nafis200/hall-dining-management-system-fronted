@@ -85,6 +85,9 @@ const Register = () => {
 
             {/* <div className="absolute inset-0 bg-cover bg-center opacity-30" style={{ backgroundImage: "url('../../../src/assets/images/bgReg0.jpeg')" }}>
             </div> */}
+             <div className="absolute inset-0 bg-cover bg-center opacity-90" style={{ backgroundImage: "url('https://i.postimg.cc/ZKgyrTj1/pexels-kyleroxas-2122294.jpg')" }}>
+
+            </div>
             <div className="absolute inset-0 bg-black opacity-50"></div>
 
             <div className="relative z-10 w-full max-w-md p-4 bg-white shadow-md rounded-lg">
