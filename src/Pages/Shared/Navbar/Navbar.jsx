@@ -33,7 +33,7 @@ const NavBar = () => {
                     </div>
                     <a className="text-xl flex gap-1">
                         {/* <img src={dropletLogo} className='w-2 md:w-6' alt="dropletlogo" /> */}
-                        <span className='text-sm md:text-xl'>Hall dining Management</span>
+                        <span className='text-sm md:text-xl text-primary'>Hall dining Management</span>
                     </a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
