@@ -21,6 +21,7 @@ const NavBar = () => {
 
     return (
         <>
+            {/* <div className="navbar fixed z-10 bg-opacity-25 max-w-screen-xl bg-black text-white mb-10"> */}
             <div className="navbar fixed z-10 bg-opacity-25 max-w-screen-xl bg-black text-white mb-10">
                 <div className="navbar-start">
                     <div className="dropdown">
