@@ -70,7 +70,7 @@ const Login = () => {
             <div className="hero-content flex-col">
                 <div className="text-center">
                     <h1 className="text-3xl md:text-5xl font-bold text-primary my-3 mt-10 animate__animated animate__fadeInDown">
-                        Login now !
+                        Please Login now here !
                     </h1>
 
                     <div className="card w-full lg:w-[600px] shadow-2xl bg-base-100 p-10 animate__animated animate__slideInLeft">
@@ -140,5 +140,6 @@ const Login = () => {
         </div>
     );
 };
+
 
 export default Login;
