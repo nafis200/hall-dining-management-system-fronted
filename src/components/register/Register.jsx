@@ -92,7 +92,7 @@ const Register = () => {
 
             <div className="relative z-10 w-full max-w-md p-4 bg-white shadow-md rounded-lg">
                 <h1 className="text-3xl font-bold text-center text-primary mb-6 animate__animated animate__fadeInDown">
-                    Register Now!
+                    Please Register Now!
                 </h1>
 
                 <form onSubmit={handleRegister}>
