@@ -7,6 +7,7 @@ import Register from "../components/register/Register";
 import Login from "../components/login/Login";
 import Home from "../Home/Home";
 import Dashboard from "../Layout/Dashboard";
+import FoodMeatList from "../Pages/Dashboard/Manager/FoodMeatList";
 // import Main from "../Layout/Main";
 // import Main from "../Layout/Main";
 // import Home from "../Pages/Home/Home";
@@ -38,7 +39,8 @@ export const router = createBrowserRouter([
         element:<Dashboard/>,
         children:[
             {
-                
+                path:"managefood",
+                element:<FoodMeatList/>
             }
         ]
     }
