@@ -6,6 +6,7 @@ import Main from "../Layout/Main";
 import Register from "../components/register/Register";
 import Login from "../components/login/Login";
 import Home from "../Home/Home";
+import Dashboard from "../Layout/Dashboard";
 // import Main from "../Layout/Main";
 // import Main from "../Layout/Main";
 // import Home from "../Pages/Home/Home";
@@ -32,4 +33,13 @@ export const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: 'dashboard',
+        element:<Dashboard/>,
+        children:[
+            {
+                
+            }
+        ]
+    }
 ]);

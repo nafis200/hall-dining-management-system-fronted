@@ -16,7 +16,9 @@ const NavBar = () => {
 
     const navOptions = <>
         <li className='hover:text-yellow-300 hover:font-bold hover:text-[15px]'><Link to="/">Home</Link></li>
-        <li className='hover:text-yellow-300 hover:font-bold hover:text-[15px]'><Link to="/dashboard">Dashboard</Link></li>
+        {
+            user && <li className='hover:text-yellow-300 hover:font-bold hover:text-[15px]'><Link to="/dashboard">Dashboard</Link></li>
+        }
     </>
 
     return (

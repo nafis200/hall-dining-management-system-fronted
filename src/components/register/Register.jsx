@@ -1,4 +1,3 @@
-
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -18,81 +17,85 @@ const Register = () => {
     const navigate = useNavigate();
     const axiosPublic = useAxiosPublic();
 
-    const handleRegister = e => {
+    const handleRegister = async (e) => {
         e.preventDefault();
-        const name = e.target.name.value;
-        const photo = e.target.photo.value;
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        const role = e.target.role.value; // Capture the selected role
 
+        // Extract form data
+        const form = e.target;
+        const name = form.name.value;
+        const photo = form.photo.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        const role = form.role.value;
+
+        // Reset error and success messages
         setRegisterError('');
         setSuccess('');
 
+        // Validate password strength
         if (password.length < 6) {
             setRegisterError('Password should be at least 6 characters or longer');
             return;
         } else if (!/[A-Z]/.test(password)) {
-            setRegisterError('Your password should have at least one upper case character.');
+            setRegisterError('Your password should have at least one uppercase character.');
             return;
         } else if (!/[a-z]/.test(password)) {
-            setRegisterError('Your password should have at least one lower case character.');
+            setRegisterError('Your password should have at least one lowercase character.');
             return;
         } else if (!/[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]+/.test(password)) {
             setRegisterError('Your password should have at least one special character.');
             return;
         }
 
-        createUser(email, password)
-            .then(result => {
+        try {
+            // Create user with email and password
+            const result = await createUser(email, password);
+            const loggedUser = result.user;
+
+            // Update user profile
+            await updateProfile(loggedUser, {
+                displayName: name,
+                photoURL: photo
+            });
+
+            // Save user info to the database
+            const userInfo = { name, email, role };
+            const res = await axiosPublic.post('/users', userInfo);
+
+            if (res.data.insertedId) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "User created successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 setSuccess('User Created Successfully.');
                 toast.success('User Created Successfully.');
-                const loggedUser = result.user;
-                updateProfile(result.user, {
-                    displayName: name,
-                    photoURL: photo
-                })
-                    .then(() => {
-                        const userInfo = { name: name, email: email, role: role }; // Include role in user info
-                        axiosPublic.post('/users', userInfo)
-                            .then(res => {
-                                if (res.data.insertedId) {
-                                    Swal.fire({
-                                        position: "top-end",
-                                        icon: "success",
-                                        title: "User created successfully",
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
-                                }
-                                navigate('/');
-                            })
-                    })
-                    .catch(error => console.log(error))
-            })
-            .catch(error => {
-                console.error(error);
-                setRegisterError(error.message);
-            })
-    }
+                navigate('/');
+            }
+        } catch (error) {
+            console.error(error);
+            setRegisterError(error.message);
+        }
+    };
 
     return (
         <div className="relative min-h-screen flex items-center justify-center bg-gray-100">
+            {/* Helmet for setting page title */}
             <Helmet>
                 <title>Register</title>
             </Helmet>
-        
 
-            {/* <div className="absolute inset-0 bg-cover bg-center opacity-30" style={{ backgroundImage: "url('../../../src/assets/images/bgReg0.jpeg')" }}>
-            </div> */}
+            {/* Background overlay */}
             <div className="absolute inset-0 bg-black opacity-50"></div>
 
-            <div className="relative z-10 w-full max-w-md p-4 bg-white shadow-md rounded-lg">
-                <h1 className="text-3xl font-bold text-center text-orange-500 mb-6 animate__animated animate__fadeInDown">
-                    Register Now!
-                </h1>
+            {/* Registration form */}
+            <div className="relative z-10 w-full max-w-md p-6 bg-white shadow-md rounded-lg">
+                <h1 className="text-3xl font-bold text-center text-orange-500 mb-6">Register Now!</h1>
 
                 <form onSubmit={handleRegister}>
+                    {/* Name input */}
                     <div className="form-control w-full mb-4">
                         <label className="label">
                             <span className="label-text">Name</span>
@@ -100,6 +103,7 @@ const Register = () => {
                         <input type="text" name="name" placeholder="Enter your name" className="input input-bordered w-full" required />
                     </div>
 
+                    {/* Email input */}
                     <div className="form-control w-full mb-4">
                         <label className="label">
                             <span className="label-text">Email</span>
@@ -107,6 +111,7 @@ const Register = () => {
                         <input type="email" name="email" placeholder="Enter your email" className="input input-bordered w-full" required />
                     </div>
 
+                    {/* Photo URL input */}
                     <div className="form-control w-full mb-4">
                         <label className="label">
                             <span className="label-text">Photo URL</span>
@@ -114,23 +119,31 @@ const Register = () => {
                         <input type="text" name="photo" placeholder="Enter photo URL" className="input input-bordered w-full" required />
                     </div>
 
+                    {/* Role selection */}
                     <div className="form-control w-full mb-4">
                         <label className="label">
                             <span className="label-text">Role</span>
                         </label>
                         <select name="role" className="select select-bordered w-full" required>
                             <option value="">Select Role</option>
-                            <option value="Donor">Donor</option>
-                            <option value="Patient">Patient</option>
+                            <option value="manager">Manager</option>
+                            <option value="user">User</option>
                         </select>
                     </div>
 
+                    {/* Password input */}
                     <div className="form-control w-full mb-6">
                         <label className="label">
                             <span className="label-text">Password</span>
                         </label>
                         <div className="relative">
-                            <input type={showPassword ? "text" : "password"} name="password" placeholder="Enter your password" className="input input-bordered w-full" required />
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                placeholder="Enter your password"
+                                className="input input-bordered w-full"
+                                required
+                            />
                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                                 <span onClick={() => setShowPassword(!showPassword)} className="cursor-pointer">
                                     {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -139,19 +152,23 @@ const Register = () => {
                         </div>
                     </div>
 
+                    {/* Submit button */}
                     <button type="submit" className="btn w-full bg-orange-400 hover:bg-orange-500 text-white">
                         Register
                     </button>
                 </form>
 
+                {/* Error message */}
                 {registerError && (
                     <p className="text-red-500 text-center mt-4">{registerError}</p>
                 )}
 
+                {/* Success message */}
                 {success && (
                     <p className="text-green-500 text-center mt-4">{success}</p>
                 )}
 
+                {/* Navigation links */}
                 <div className="mt-4 text-center">
                     <p>
                         Already have an account? <Link to="/login" className="text-orange-600 font-bold">Login</Link>
@@ -165,6 +182,7 @@ const Register = () => {
                 </div>
             </div>
 
+            {/* Toast notifications */}
             <ToastContainer />
         </div>
     );
