@@ -62,7 +62,7 @@ const Dashboard = () => {
                                     <>
                                         <li><NavLink to='/dashboard/adminHome'><FaHome />Manager Home</NavLink> </li>
                                         <li><NavLink to='/dashboard/managefood'> <FaUsers></FaUsers> FoodMeat List</NavLink> </li>
-                                        <li><NavLink to='/dashboard/allUsers'> <FaUsers></FaUsers> All Food list</NavLink> </li>
+                                        <li><NavLink to='/dashboard/Allfoodlist'> <FaUsers></FaUsers> All Food list</NavLink> </li>
                                         <li><NavLink to='/dashboard/paymentCollection'><MdPayments ></MdPayments >Payment History</NavLink> </li>
                                     </>
                                     :

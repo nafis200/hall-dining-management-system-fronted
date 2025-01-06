@@ -33,6 +33,8 @@ const FoodMeatList = () => {
       enrollmentTime: enrollmentTime,
     };
 
+    console.log(formData)
+
     setItems([]);
     setInputValue("");
     setPrice("");

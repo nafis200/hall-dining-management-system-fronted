@@ -8,6 +8,8 @@ import Login from "../components/login/Login";
 import Home from "../Home/Home";
 import Dashboard from "../Layout/Dashboard";
 import FoodMeatList from "../Pages/Dashboard/Manager/FoodMeatList";
+import SeeFoodList from "../Pages/Dashboard/Manager/SeeFoodList";
+
 // import Main from "../Layout/Main";
 // import Main from "../Layout/Main";
 // import Home from "../Pages/Home/Home";
@@ -41,7 +43,11 @@ export const router = createBrowserRouter([
             {
                 path:"managefood",
                 element:<FoodMeatList/>
-            }
+            },
+            {
+                path:"Allfoodlist",
+                element:<SeeFoodList/>
+            },
         ]
     }
 ]);
