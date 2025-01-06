@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { useLocation } from "react-router-dom";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { AuthContext } from "../../../providers/AuthProvider";
 
@@ -8,11 +6,8 @@ const SeeStudentList = () => {
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [paymentUrl, setPaymentUrl] = useState(null); // Added state to store payment URL
+  const [paymentStatus, setPaymentStatus] = useState({}); 
   const { user } = useContext(AuthContext);
-  const location = useLocation();
-  const data = location?.state;
-
   const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
@@ -29,6 +24,35 @@ const SeeStudentList = () => {
 
     fetchFoods();
   }, []);
+
+  useEffect(() => {
+    const fetchPaymentStatus = async () => {
+      if (!user?.email) return;
+      try {
+        const response = await axiosPublic.get(`/find-food-id?email=${user.email}`);
+  
+        console.log("Response data:", response.data);
+  
+        const foodData = response.data.foodData;
+        if (Array.isArray(foodData)) {
+          const statuses = foodData.reduce((acc, curr) => {
+            if (curr.foodId && curr.status) {
+              acc[curr.foodId] = curr.status;
+            }
+            return acc;
+          }, {});
+          setPaymentStatus(statuses);
+        } else {
+          console.error("foodData is not an array:", foodData);
+        }
+      } catch (err) {
+        console.error("Failed to fetch payment status:", err);
+      }
+    };
+  
+    fetchPaymentStatus();
+  }, [user]);
+  
 
   const handlePayment = (food) => {
     if (!user?.email) {
@@ -50,11 +74,8 @@ const SeeStudentList = () => {
     axiosPublic
       .post("/sslCommerce", { data: paymentData })
       .then((res) => {
-        console.log(res.data);
         if (res.data?.paymentUrl) {
-          setPaymentUrl(res.data.paymentUrl); // Store the payment URL in state
-          // Optionally open it in a new window
-          window.open(res.data.paymentUrl, "_blank"); 
+          window.open(res.data.paymentUrl, "_blank");
         }
       })
       .catch((err) => console.error("Payment error:", err));
@@ -64,6 +85,12 @@ const SeeStudentList = () => {
     document.getElementById(`modal_${food._id}`).showModal();
   };
 
+  const isTimeOver = (enrollmentTime) => {
+    const now = new Date();
+    const deadline = new Date(enrollmentTime);
+    return now > deadline;
+  };
+
   if (loading) return <div className="text-center">Loading...</div>;
   if (error) return <div className="text-center text-red-500">{error}</div>;
 
@@ -71,51 +98,68 @@ const SeeStudentList = () => {
     <div className="container mx-auto p-4 mt-10">
       <h1 className="text-2xl font-bold text-center mb-6">Food List</h1>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-4">
-        {foods.map((food) => (
-          <div key={food._id} className="card bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title">{food.mealType}</h2>
-              <p>
-                <span className="font-semibold">Items:</span>{" "}
-                {food.items.join(", ")}
-              </p>
-              <p>
-                <span className="font-semibold">Price:</span> ${food.price}
-              </p>
-              <p>
-                <span className="font-semibold">Enrollment Time before:</span>{" "}
-                {new Date(food.enrollmentTime).toLocaleString()}
-              </p>
-              <button
-                className="btn btn-primary mt-4"
-                onClick={() => openModal(food)}
-              >
-                Proceed to Pay
-              </button>
-            </div>
-            <dialog id={`modal_${food._id}`} className="modal">
-              <div className="modal-box bg-green-400">
-                <h3 className="font-bold text-lg text-center text-black">Are you sure?</h3>
-                <p className="mt-5 text-center font-bold text-black">
-                  Your total bill is ${food.price}
+        {foods.map((food) => {
+          const timeOver = isTimeOver(food.enrollmentTime);
+          const alreadyEnrolled = paymentStatus[food._id] === "success";
+
+          return (
+            <div key={food._id} className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title">{food.mealType}</h2>
+                <p>
+                  <span className="font-semibold">Items:</span>{" "}
+                  {food.items.join(", ")}
                 </p>
-                <div className="flex justify-center mt-5">
-                  <button
-                    onClick={() => handlePayment(food)}
-                    className="btn btn-success text-white"
-                  >
-                    Pay the bill
+                <p>
+                  <span className="font-semibold">Price:</span> ${food.price}
+                </p>
+                <p>
+                  <span className="font-semibold">Enrollment Time before:</span>{" "}
+                  {new Date(food.enrollmentTime).toLocaleString()}
+                </p>
+                {alreadyEnrolled ? (
+                  <button className="btn btn-disabled mt-4 bg-gray-400 cursor-not-allowed">
+                    Already Enrolled
                   </button>
-                </div>
-                <div className="modal-action">
-                  <form method="dialog">
-                    <button className="btn">Close</button>
-                  </form>
-                </div>
+                ) : timeOver ? (
+                  <button className="btn btn-disabled mt-4 bg-gray-400 cursor-not-allowed">
+                    Time Over
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-primary mt-4"
+                    onClick={() => openModal(food)}
+                  >
+                    Proceed to Pay
+                  </button>
+                )}
               </div>
-            </dialog>
-          </div>
-        ))}
+              <dialog id={`modal_${food._id}`} className="modal">
+                <div className="modal-box bg-green-400">
+                  <h3 className="font-bold text-lg text-center text-black">
+                    Are you sure?
+                  </h3>
+                  <p className="mt-5 text-center font-bold text-black">
+                    Your total bill is ${food.price}
+                  </p>
+                  <div className="flex justify-center mt-5">
+                    <button
+                      onClick={() => handlePayment(food)}
+                      className="btn btn-success text-white"
+                    >
+                      Pay the bill
+                    </button>
+                  </div>
+                  <div className="modal-action">
+                    <form method="dialog">
+                      <button className="btn">Close</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
