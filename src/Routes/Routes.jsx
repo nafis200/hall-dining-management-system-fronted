@@ -12,6 +12,7 @@ import SeeFoodList from "../Pages/Dashboard/Manager/SeeFoodList";
 import SeeStudentList from "../Pages/Dashboard/Students/SeeStudentList";
 import Paymentsuccess from "../Pages/Dashboard/payment/Paymentsuccess";
 import Paymentfailure from "../Pages/Dashboard/payment/Paymentfailure";
+import Seepayment from "../Pages/Dashboard/Students/Seepayment";
 
 
 
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
                 path: '/failure',
                 element: <Paymentfailure />
             },
+            
         ]
     },
     {
@@ -58,6 +60,10 @@ export const router = createBrowserRouter([
                 path: "StudentList",
                 element: <SeeStudentList />
             },
+            {
+                path:'Studentpayment',
+                element:<Seepayment/>
+            }
 
         ]
     }

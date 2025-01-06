@@ -60,16 +60,13 @@ const Dashboard = () => {
 
                                 isAdmin ?
                                     <>
-                                        <li><NavLink to='/dashboard/adminHome'><FaHome />Manager Home</NavLink> </li>
                                         <li><NavLink to='/dashboard/managefood'> <FaUsers></FaUsers> FoodMeat List</NavLink> </li>
                                         <li><NavLink to='/dashboard/Allfoodlist'> <FaUsers></FaUsers> All Food list</NavLink> </li>
-                                        <li><NavLink to='/dashboard/paymentCollection'><MdPayments ></MdPayments >Payment History</NavLink> </li>
                                     </>
                                     :
                                     <>
-                                        <li><NavLink to='/dashboard/userHome'><FaHome />User Home</NavLink> </li>
                                         <li> <NavLink to='/dashboard/StudentList'> <FaUser/>  Food booking </NavLink> </li>
-                                        <li> <NavLink to='/dashboard/paymenthistory'><FaUser></FaUser> Payment History </NavLink> </li>
+                                        <li> <NavLink to='/dashboard/Studentpayment'><FaUser></FaUser> Payment History </NavLink> </li>
                                     </>
 
 
