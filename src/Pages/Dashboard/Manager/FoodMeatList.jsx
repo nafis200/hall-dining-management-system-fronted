@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "tailwindcss/tailwind.css";
-import "daisyui/dist/full.css"; // Import DaisyUI
+import "daisyui/dist/full.css";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const FoodMeatList = () => {
   const [items, setItems] = useState([]);
@@ -8,56 +10,54 @@ const FoodMeatList = () => {
   const [price, setPrice] = useState("");
   const [mealType, setMealType] = useState("lunch");
   const [enrollmentTime, setEnrollmentTime] = useState("");
-  const [isEnrollmentOpen, setIsEnrollmentOpen] = useState(true);
 
-  // Function to add item to the list
   const addItem = () => {
     if (inputValue.trim() !== "") {
       const newItem = inputValue.trim();
       setItems([...items, newItem]);
-      setInputValue(""); 
+      setInputValue("");
     }
   };
-
-  // Function to delete an item from the list
   const deleteItem = (itemToDelete) => {
     setItems(items.filter(item => item !== itemToDelete));
   };
 
-  // Function to check if the enrollment is open
-  const checkEnrollmentStatus = () => {
-    const currentDateTime = new Date();
-    const selectedDateTime = new Date(enrollmentTime);
 
-    if (currentDateTime > selectedDateTime) {
-      setIsEnrollmentOpen(false);
-      setItems([]);  // Clear the food list if the time is over
-    } else {
-      setIsEnrollmentOpen(true);
-    }
-  };
-
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Collect form data
     const formData = {
       items: items,
       price: price,
       mealType: mealType,
-      enrollmentTime: enrollmentTime
+      enrollmentTime: enrollmentTime,
     };
 
-    console.log("Form Submitted: ", formData);
-
-    // Clear food items after submission
     setItems([]);
     setInputValue("");
     setPrice("");
     setMealType("lunch");
     setEnrollmentTime("");
+
+
+    try {
+      const axiosPublic = useAxiosPublic(); 
+      const res = await axiosPublic.post('/food', formData);
+
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User created successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form: ", error);
+    }
   };
+
 
   return (
     <div className="max-w-md mx-auto py-8">
