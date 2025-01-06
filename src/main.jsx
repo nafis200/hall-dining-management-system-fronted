@@ -16,6 +16,7 @@ createRoot(document.getElementById('root')).render(
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
       <div className='max-w-screen-xl mx-auto'>
+      {/* <div className='max-w-screen-xl'> */}
           <RouterProvider router={router}/>
         </div>
       </HelmetProvider>

@@ -171,13 +171,13 @@ const Register = () => {
                 {/* Navigation links */}
                 <div className="mt-4 text-center">
                     <p>
-                        Already have an account? <Link to="/login" className="text-orange-600 font-bold">Login</Link>
+                        Already have an account? <Link to="/login" className="text-primary font-bold">Login</Link>
                     </p>
                 </div>
 
                 <div className="mt-2 text-center">
                     <p>
-                        Go back to <Link to="/" className="text-orange-500 font-bold">Home</Link>
+                        Go back to <Link to="/" className="text-primary font-bold">Home</Link>
                     </p>
                 </div>
             </div>

@@ -61,15 +61,16 @@ const Login = () => {
     };
 
     return (
-        <div className="hero min-h-screen bg-base-200 bg-[url('https://i.postimg.cc/Y075n05X/1000-F-668433624-HGKul-Uw-Qjae-LV8-Xay-QYy6-F3-RCVQff-TGv.jpg')] animate__animated animate__slideInLeft animate__delay-1s">
+        // <div className="hero min-h-screen bg-base-200 bg-[url('https://i.postimg.cc/Y075n05X/1000-F-668433624-HGKul-Uw-Qjae-LV8-Xay-QYy6-F3-RCVQff-TGv.jpg')] animate__animated animate__slideInLeft animate__delay-1s">
+        <div className="hero min-h-screen bg-base-200 bg-[url('https://i.postimg.cc/pLpJHG1t/pexels-life-of-pix-67468.jpg')] animate__animated animate__slideInLeft animate__delay-1s">
             <Helmet>
                 <title>Login</title>
             </Helmet>
 
             <div className="hero-content flex-col">
                 <div className="text-center">
-                    <h1 className="text-3xl md:text-5xl font-bold text-black my-3 animate__animated animate__fadeInDown">
-                        Login now!
+                    <h1 className="text-3xl md:text-5xl font-bold text-primary my-3 mt-10 animate__animated animate__fadeInDown">
+                        Please Login now here !
                     </h1>
 
                     <div className="card w-full lg:w-[600px] shadow-2xl bg-base-100 p-10 animate__animated animate__slideInLeft">
@@ -111,25 +112,25 @@ const Login = () => {
                                 </label>
                             </div>
 
-                            <button type="submit" className="btn bg-orange-400 hover:bg-orange-500 w-full">
+                            <button type="submit" className="btn btn-primary hover:bg-orange-500 text-white w-full">
                                 Login
                             </button>
                         </form>
 
                         <div className="divider">OR</div>
 
-                        <button onClick={handleGoogleSignIn} className="btn btn-outline w-full border-orange-500 text-orange-500 hover:border-orange-600 hover:text-orange-600 flex items-center justify-center">
+                        <button onClick={handleGoogleSignIn} className="btn btn-outline w-full btn-primary hover:border-orange-600 hover:text-white flex items-center justify-center">
                             <FcGoogle className="mr-2" /> Continue with Google
                         </button>
 
                         <p className="text-center mt-4">
                             New to this site?{' '}
-                            <Link to="/register" className="text-orange-600 font-bold">Register</Link>
+                            <Link to="/register" className="text-primary font-bold">Register</Link>
                         </p>
 
                         <p className="text-center">
                             Go back to{' '}
-                            <Link to="/" className="text-orange-500 font-bold">Home</Link>
+                            <Link to="/" className="text-primary font-bold">Home</Link>
                         </p>
                     </div>
                 </div>
@@ -139,5 +140,6 @@ const Login = () => {
         </div>
     );
 };
+
 
 export default Login;

@@ -23,6 +23,7 @@ const NavBar = () => {
 
     return (
         <>
+            {/* <div className="navbar fixed z-10 bg-opacity-25 max-w-screen-xl bg-black text-white mb-10"> */}
             <div className="navbar fixed z-10 bg-opacity-25 max-w-screen-xl bg-black text-white mb-10">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -35,7 +36,7 @@ const NavBar = () => {
                     </div>
                     <a className="text-xl flex gap-1">
                         {/* <img src={dropletLogo} className='w-2 md:w-6' alt="dropletlogo" /> */}
-                        <span className='text-sm md:text-xl'>Hall dining Management</span>
+                        <span className='text-sm md:text-xl text-primary'>Hall dining Management System</span>
                     </a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
@@ -50,10 +51,10 @@ const NavBar = () => {
                                 <div className="flex flex-col md:flex-row items-center gap-2">
                                     <p className="text-sm md:text-base text-white">{user.displayName}</p>
                                     <div className="tooltip tooltip-bottom" data-tip={user.displayName}>
-                                        <img className="w-10 h-10 md:w-14 md:h-14 border-2 border-red-600 rounded-full" src={user.photoURL} alt="User Profile" />
+                                        <img className="w-10 h-10 md:w-14 md:h-14 border-2 border-violet-600 rounded-full" src={user.photoURL} alt="User Profile" />
                                     </div>
                                 </div>
-                                <button onClick={handleLogOut} className="btn btn-info bg-orange-600 md:h-14 btn-sm md:w-28">
+                                <button onClick={handleLogOut} className="btn btn-info bg-violet-700 md:h-14 btn-sm md:w-28">
                                     Log out
                                 </button>
                             </>
@@ -63,7 +64,7 @@ const NavBar = () => {
                                     <button className="btn btn-info btn-sm md:h-14 md:w-28 ">Log in</button>
                                 </Link>
                                 <Link to="/register">
-                                    <button className="btn bg-green-300 md:h-14 text-blue-700 btn-sm md:w-28">Register</button>
+                                    <button className="btn bg-violet-600 md:h-14 text-white btn-sm md:w-28">Register</button>
                                 </Link>
                             </div>
                         )
