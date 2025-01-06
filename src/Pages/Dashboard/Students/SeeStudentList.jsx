@@ -6,9 +6,10 @@ const SeeStudentList = () => {
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [paymentStatus, setPaymentStatus] = useState({}); 
+  const [paymentStatus, setPaymentStatus] = useState({});
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
+  const [countdowns, setCountdowns] = useState({});
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -30,9 +31,8 @@ const SeeStudentList = () => {
       if (!user?.email) return;
       try {
         const response = await axiosPublic.get(`/find-food-id?email=${user.email}`);
-  
         console.log("Response data:", response.data);
-  
+
         const foodData = response.data.foodData;
         if (Array.isArray(foodData)) {
           const statuses = foodData.reduce((acc, curr) => {
@@ -49,10 +49,39 @@ const SeeStudentList = () => {
         console.error("Failed to fetch payment status:", err);
       }
     };
-  
+
     fetchPaymentStatus();
   }, [user]);
-  
+
+  useEffect(() => {
+    const startCountdown = (food) => {
+      const deadline = new Date(food.enrollmentTime);
+      const id = food._id;
+      const intervalId = setInterval(() => {
+        const now = new Date();
+        const timeRemaining = deadline - now;
+        if (timeRemaining <= 0) {
+          clearInterval(intervalId); 
+          setCountdowns((prev) => ({ ...prev, [id]: "Time Over" }));
+        } else {
+          const minutes = Math.floor(timeRemaining / 60000);
+          const seconds = Math.floor((timeRemaining % 60000) / 1000);
+          const formattedTime = `${minutes}m ${seconds}s`;
+          setCountdowns((prev) => ({ ...prev, [id]: formattedTime }));
+        }
+      }, 1000);
+    };
+
+    foods.forEach((food) => {
+      startCountdown(food);
+    });
+
+    return () => {
+      Object.keys(countdowns).forEach((id) => {
+        clearInterval(countdowns[id]);
+      });
+    };
+  }, [foods, countdowns]);
 
   const handlePayment = (food) => {
     if (!user?.email) {
@@ -101,14 +130,14 @@ const SeeStudentList = () => {
         {foods.map((food) => {
           const timeOver = isTimeOver(food.enrollmentTime);
           const alreadyEnrolled = paymentStatus[food._id] === "success";
+          const countdown = countdowns[food._id];
 
           return (
             <div key={food._id} className="card bg-base-100 shadow-xl">
               <div className="card-body">
                 <h2 className="card-title">{food.mealType}</h2>
                 <p>
-                  <span className="font-semibold">Items:</span>{" "}
-                  {food.items.join(", ")}
+                  <span className="font-semibold">Items:</span> {food.items.join(", ")}
                 </p>
                 <p>
                   <span className="font-semibold">Price:</span> ${food.price}
@@ -126,12 +155,15 @@ const SeeStudentList = () => {
                     Time Over
                   </button>
                 ) : (
-                  <button
-                    className="btn btn-primary mt-4"
-                    onClick={() => openModal(food)}
-                  >
-                    Proceed to Pay
-                  </button>
+                  <>
+                    <p className="text-center mt-2">{countdown}</p>
+                    <button
+                      className="btn btn-primary mt-4"
+                      onClick={() => openModal(food)}
+                    >
+                      Proceed to Pay
+                    </button>
+                  </>
                 )}
               </div>
               <dialog id={`modal_${food._id}`} className="modal">
