@@ -13,6 +13,14 @@ import SeeStudentList from "../Pages/Dashboard/Students/SeeStudentList";
 import Paymentsuccess from "../Pages/Dashboard/payment/Paymentsuccess";
 import Paymentfailure from "../Pages/Dashboard/payment/Paymentfailure";
 import Seepayment from "../Pages/Dashboard/Students/Seepayment";
+import CompainBox from "../Pages/Dashboard/Students/CompainBox";
+import ComplaintsList from "../Pages/Dashboard/Manager/ComplaintsList";
+import Notice from "../Pages/Dashboard/Manager/Notice";
+import Noticeboard from "../Pages/Dashboard/Students/Noticeboard";
+import SeeAllpayment from "../Pages/Dashboard/admin/SeeAllpayment";
+import SeeAlluser from "../Pages/Dashboard/admin/SeeAlluser";
+import Protected from "../providers/Protected";
+
 
 
 
@@ -46,7 +54,7 @@ export const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <Dashboard />,
+        element: <Protected><Dashboard /></Protected>,
         children: [
             {
                 path: "managefood",
@@ -63,7 +71,32 @@ export const router = createBrowserRouter([
             {
                 path:'Studentpayment',
                 element:<Seepayment/>
+            },
+            {
+                path:'compalin-student',
+                element:<CompainBox/>
+            },
+            {
+                path:'compalin-manager',
+                element:<ComplaintsList/>
+            },
+            {
+                path:'notice-manager',
+                element:<Notice/>
+            },
+            {
+                path:'notice-board',
+                element:<Noticeboard/>
+            },
+            {
+                path:'admin-payment',
+                element:<SeeAllpayment/>
+            },
+            {
+                path:'admin-alluser',
+                element:<SeeAlluser/>
             }
+            
 
         ]
     }

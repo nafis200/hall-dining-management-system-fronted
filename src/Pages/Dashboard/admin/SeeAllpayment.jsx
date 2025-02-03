@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect, useContext } from "react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { AuthContext } from "../../../providers/AuthProvider";
 
-const SeePayment = () => {
+const SeeAllpayment = () => {
   const { user } = useContext(AuthContext);
   const [foodData, setFoodData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ const SeePayment = () => {
 
     const fetchFoodData = async () => {
       try {
-        const response = await axiosPublic.get(`/find-food-id?email=${user.email}`);
+        const response = await axiosPublic.get(`/find-food-payment`);
 
         if (response.data.success) {
           setFoodData(response.data.foodData);
@@ -90,4 +91,4 @@ const SeePayment = () => {
   );
 };
 
-export default SeePayment;
+export default SeeAllpayment;

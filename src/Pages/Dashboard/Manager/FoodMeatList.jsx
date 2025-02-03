@@ -50,7 +50,7 @@ const FoodMeatList = () => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "User created successfully",
+          title: "Food Item Added successfully",
           showConfirmButton: false,
           timer: 1500,
         });
